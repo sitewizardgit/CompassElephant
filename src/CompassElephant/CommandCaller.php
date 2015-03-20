@@ -92,7 +92,8 @@ class CommandCaller
         $process = new Process(escapeshellcmd($cmd), $this->projectPath);
         $process->run();
         if (!$process->isSuccessful()) {
-            $output = !empty($process->getErrorOutput()) ? $process->getErrorOutput() : $process->getOutput();
+            //Changed because php version => 5.5 supports expressions -> $output = !empty($process->getErrorOutput()) ? $process->getErrorOutput() : $process->getOutput();
+            $output = ($process->getErrorOutput()) ? $process->getErrorOutput() : $process->getOutput();
             throw new CompassException($output);
         }
         $this->output = $process->getOutput();
